@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejoindre la chaîne de jeune_singe sur Twitch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2c2f36;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            animation: glow-background 10s infinite alternate;
+        }
+
+        /* Animation d'arrière-plan lumineux */
+        @keyframes glow-background {
+            0% {
+                background-color: #2c2f36;
+            }
+            100% {
+                background-color: #3a3d45;
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #64b5f6;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #64b5f6, 0 0 20px #64b5f6, 0 0 30px #64b5f6;
+            animation: glowing-text 2s ease-in-out infinite alternate;
+        }
+
+        /* Animation de texte lumineux */
+        @keyframes glowing-text {
+            0% {
+                text-shadow: 0 0 5px #64b5f6, 0 0 10px #64b5f6, 0 0 15px #64b5f6;
+            }
+            50% {
+                text-shadow: 0 0 20px #ff5f5f, 0 0 30px #ff5f5f, 0 0 40px #ff5f5f;
+            }
+            100% {
+                text-shadow: 0 0 5px #64b5f6, 0 0 10px #64b5f6, 0 0 15px #64b5f6;
+            }
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 30px;
+            animation: glowing-text 2s ease-in-out infinite alternate;
+        }
+
+        .cta {
+            background-color: #ff5f5f;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 0 10px #ff5f5f, 0 0 20px #ff5f5f;
+        }
+
+        /* Effet lumineux au survol */
+        .cta:hover {
+            background-color: #ff3d3d;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ff5f5f, 0 0 30px #ff5f5f;
+        }
+
+        .footer {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #64b5f6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ff5f5f;
+        }
+
+        .counter {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #64b5f6;
+            text-shadow: 0 0 10px #64b5f6, 0 0 20px #64b5f6, 0 0 30px #64b5f6;
+        }
+
+        .counter span {
+            font-weight: bold;
+        }
+
+        /* Animation de clignotement pour les compteurs */
+        @keyframes counter-glow {
+            0% {
+                color: #64b5f6;
+                text-shadow: 0 0 10px #64b5f6, 0 0 20px #64b5f6;
+            }
+            50% {
+                color: #ff5f5f;
+                text-shadow: 0 0 20px #ff5f5f, 0 0 30px #ff5f5f;
+            }
+            100% {
+                color: #64b5f6;
+                text-shadow: 0 0 10px #64b5f6, 0 0 20px #64b5f6;
+            }
+        }
+
+        .counter p {
+            animation: counter-glow 2s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Bienvenue sur la chaîne de jeune_singe !</h1>
+        <p>
+            Si tu es un fan de gaming, de discussions fun et de moments épiques, tu es au bon endroit ! 
+            Rejoins la communauté et plonge dans l'univers de jeune_singe sur Twitch.
+        </p>
+        <p>
+            Clique sur le lien ci-dessous pour accéder à la chaîne et découvrir du contenu en direct.
+        </p>
+        <a href="https://www.twitch.tv/jeune_singe" target="_blank" class="cta">Rejoindre la chaîne sur Twitch</a>
+
+        <div class="counter">
+            <p>Nombre de <span id="followers-count">followers</span> : <span id="followers-value">Chargement...</span></p>
+            <p>Nombre de <span id="subs-count">abonnés</span> : <span id="subs-value">Chargement...</span></p>
+        </div>
+
+        <div class="footer">
+            <p>Reste connecté pour ne rien manquer des prochains streams !</p>
+            <p>Tu peux aussi nous suivre sur <a href="https://twitter.com/jeune_singe" target="_blank">Twitter</a> pour les dernières nouvelles.</p>
+        </div>
+    </div>
+
+    <script>
+        // Remplace par ton propre Client ID et OAuth Token
+        const CLIENT_ID = 'TON_CLIENT_ID';
+        const OAUTH_TOKEN = 'TON_OAUTH_TOKEN';
+        const CHANNEL_NAME = 'jeune_singe'; // Remplace par le nom de la chaîne
+
+        // URL de l'API Twitch pour obtenir le nombre de followers
+        const API_BASE_URL = 'https://api.twitch.tv/helix/';
+
+        // Récupérer les données des followers et abonnés
+        function fetchTwitchData() {
+            // Récupérer les followers
+            fetch(`${API_BASE_URL}users?login=${CHANNEL_NAME}`, {
+                headers: {
+                    'Client-ID': CLIENT_ID,
+                    'Authorization': `Bearer ${OAUTH_TOKEN}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const followersCount = data.data[0].followers; // Exemples de données de la réponse
+                document.getElementById('followers-value').textContent = followersCount;
+            })
+            .catch(error => console.error('Erreur lors de la récupération des followers:', error));
+
+            // Pour obtenir les abonnés, tu devras probablement utiliser une autre API, car l'API publique de Twitch ne fournit pas directement cette information.
+        }
+
+        // Appel de la fonction pour récupérer les données
+        fetchTwitchData();
+    </script>
+
+</body>
+</html>
